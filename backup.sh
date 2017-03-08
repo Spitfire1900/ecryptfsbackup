@@ -4,7 +4,7 @@ set -eux
 function getBackupStyle() {
   local BACKUP_STYLE
   local TODAY
-  TODAY=$(date +%d)
+  TODAY=$(date +%u)
   readonly TODAY
 
   if [[ $TODAY -eq '7' ]]; then
