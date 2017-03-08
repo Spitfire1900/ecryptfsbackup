@@ -1,4 +1,5 @@
 #! /bin/bash
+set -eux
 
 function getBackupStyle() {
   BACKUP_STYLE=''
