@@ -20,6 +20,12 @@ function getBackupStyle() {
   echo $BACKUP_STYLE
 }
 
+function cleanDisk() {
+  local AVG_BACKUP_SIZE=$()
+  
+  echo ""
+}
+
 # main
 cd /mnt || exit
 BACKUP_STYLE=$(getBackupStyle)
