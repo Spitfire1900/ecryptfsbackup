@@ -22,7 +22,7 @@ function getBackupStyle() {
 
 function cleanDisk() {
   local AVG_BACKUP_SIZE=$()
-  
+  # find . -regex './l1.*.tar' -exec du {} \; 2> /dev/null | awk '{print $1;}' | awk '{ total += $1; count++ }'
   echo ""
 }
 
