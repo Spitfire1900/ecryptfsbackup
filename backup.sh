@@ -1,6 +1,16 @@
 #! /bin/bash
 set -eux
 
+function diffBackup() {
+  DATE=$(date +%d-%m-%Y)
+  sudo sh -c 'nice -n +19 tar -rvpf /mnt/backup2.tar --exclude=/mnt --exclude=/home/[!.]*/*[!.ecryptfs][!.Private]* --one-file-system /'
+}
+
+function fullBackup() {
+  DATE=$(date +%d-%m-%Y)
+  sudo sh -c 'nice -n +19 tar -cvpf /mnt/backupefi.tar -g /mnt/backupefi.snar /boot/efi 2> backupefi.err; nice -n +19 tar -cvpf /mnt/ecryptfssymlinks.tar /home/[!.]*/.Private /home/[!.]*/.ecryptfs  2> /mnt/ecryptfssymlinks.err; nice -n +19 tar -cvpf /mnt/l1backup_$(date +%d-%m-%Y).tar -g /mnt/l1backup.snar --exclude=/mnt --exclude=/home/[!.]*/*[!.ecryptfs][!.Private]* --one-file-system / 2> l1backup.err'
+}
+
 function getBackupStyle() {
   local BACKUP_STYLE
   local TODAY
