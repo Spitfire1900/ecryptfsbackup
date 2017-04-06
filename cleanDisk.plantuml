@@ -2,17 +2,25 @@
 
 start
 :create backups 001-l1_...;
-:create diff backup 000-d1_;
+:create diff backup 001-d1_;
 :call cleanDisk;
 partition cleanDisk {
 
   repeat
     partition getAverageBackupSize {
-      :get list of l1 backups;
-      :break up by sets of l1backup and l1backupefi;
-      :sum up each set;
+      :get list of all backups;
+      :get sets of backup iterations;
+      note right
+        An iteration is the number series at
+        the beginning of the backup file name
+        <iteration>-<backup_type_letter>-<backup_number>_...
+      end note
+      :sum total data size of each iteration;
       :return avg all sets;
     }
+    if (avg all sets * 1.2 < freespace) then (yes)
+      :delete oldest backup;
+    endif
   repeat while (avg all sets * 1.2 < freespace)
 }
 stop
