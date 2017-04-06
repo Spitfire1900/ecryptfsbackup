@@ -1,0 +1,20 @@
+@startuml
+
+start
+:create backups 001-l1_...;
+:create diff backup 000-d1_;
+:call cleanDisk;
+partition cleanDisk {
+
+  repeat
+    partition getAverageBackupSize {
+      :get list of l1 backups;
+      :break up by sets of l1backup and l1backupefi;
+      :sum up each set;
+      :return avg all sets;
+    }
+  repeat while (avg all sets * 1.2 < freespace)
+}
+stop
+
+@enduml
