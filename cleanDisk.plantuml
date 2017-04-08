@@ -1,27 +1,32 @@
 @startuml
 
 start
-:create backups 001-l1_...;
-:create diff backup 001-d1_;
 :call cleanDisk;
-partition cleanDisk {
-
-  repeat
-    partition getAverageBackupSize {
-      :get list of all backups;
-      :get sets of backup iterations;
-      note right
-        An iteration is the number series at
-        the beginning of the backup file name
-        <iteration>-<backup_type_letter>-<backup_number>_...
-      end note
-      :sum total data size of each iteration;
-      :return avg all sets;
-    }
-    if (avg all sets * 1.2 < freespace) then (yes)
-      :delete oldest backup;
-    endif
-  repeat while (avg all sets * 1.2 < freespace)
+repeat
+  partition cleanDisk {
+      partition getAverageBackupSize {
+        :get list of all backups;
+        :get sets of backup iterations;
+        note right
+          An iteration is the number series at
+          the beginning of the backup file name
+          <iteration>-<backup_type_letter>-<backup_number>_...
+        end note
+        :sum total data size of each iteration;
+        :return avg of all sets;
+      }
+      if (avg all sets * 1.2 < freespace) then (yes)
+        :delete oldest backup;
+      endif
+    :return deleted backup;
+  }
+repeat while (cleanDisk returns deleted backups)
+partition backup {
+  if (getBackupStyle()) then (full)
+  :create full backup 001_l1_...;
+  else
+  :create diff backup 001_d_;
+  endif
 }
 stop
 
