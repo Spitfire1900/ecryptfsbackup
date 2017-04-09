@@ -10,7 +10,7 @@ function getBackupStyle() {
   if [[ $TODAY -eq '7' ]]; then
     BACKUP_STYLE='full'
     readonly BACKUP_STYLE
-  elif [[ -z $(find . -regex './l1backup_[0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9][0-9].tar' -mtime -7 2> /dev/null) ]]; then
+  elif [[ -z $(find . -maxdepth 1 -regex './[0-9][0-9][0-9]_l1backup_[0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9][0-9].tar' -mtime -7 2> /dev/null) ]]; then
     BACKUP_STYLE='full'
     readonly BACKUP_STYLE
   else
