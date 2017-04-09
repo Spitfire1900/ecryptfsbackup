@@ -21,6 +21,3 @@ function getBackupStyle() {
 }
 
 # main
-cd /mnt || exit
-BACKUP_STYLE=$(getBackupStyle)
-echo $BACKUP_STYLE
